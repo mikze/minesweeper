@@ -8,7 +8,7 @@ class Board extends Component {
 
         this.state={
             num: 8,
-            difficulty: 0.3,
+            difficulty: 1,
             board: [],
             emptyFields: [],
 
@@ -19,7 +19,8 @@ class Board extends Component {
     setBombs(difficulty,num)
     {
         const emptyFields = [];
-        let count = 0;
+        let column = 0;
+        let line = 0;
         for(let i=0; i<num*num; i++)
         emptyFields[i] = {isBomb: false, points: 0};
 
@@ -28,89 +29,21 @@ class Board extends Component {
                 let bomb = Math.random() < difficulty ? true : false;
                 emptyFields[i].isBomb=bomb;
                 if(bomb)
-                    {
-                        if(i===0)
-                            {   
-                                emptyFields[i+1].points++;
-                                emptyFields[i+num+1].points++;
-                                emptyFields[i+num].points++;   
-                             }
-                        else if(i===num-1)
-                            {
-                                emptyFields[i-1].points++;
-                                emptyFields[i+num].points++;
-                                emptyFields[i+num-1].points++;    
-                            }
-                        else if(i===num*num-num )
-                            {
-                                emptyFields[i+1].points++;
-                                emptyFields[i-num+1].points++;
-                                emptyFields[i-num].points++;  
-
-                            }    
-                        else if(i===num*num-1)
-                            {
-                                emptyFields[i-1].points++;
-                                emptyFields[i-num].points++;
-                                emptyFields[i-num-1].points++;
-                            }
-                        else if(i>0 && i<num-1)
-                            {
-                                emptyFields[i-1].points++;
-                                emptyFields[i+1].points++;
-                                emptyFields[i+num].points++;
-                                emptyFields[i+num-1].points++;
-                                emptyFields[i+num+1].points++;
-                            }
-                        else if(i>num*num-num && i<num*num-1)
-                            {
-                                emptyFields[i-1].points++;
-                                emptyFields[i+1].points++;
-                                emptyFields[i-num].points++;
-                                emptyFields[i-num-1].points++;
-                                emptyFields[i-num+1].points++;
-                                
-                            }
-                        else if(count === num -1) /////////////
-                            {
-                                emptyFields[i-1].points++;
-                                emptyFields[i+num].points++;
-                                emptyFields[i-num].points++;
-                                emptyFields[i+num-1].points++;
-                                emptyFields[i-num-1].points++;
-                                
-                            }
-                        else if(count === 0) //////////////
-                            {
-                                emptyFields[i+1].points++;
-                                emptyFields[i+num].points++;
-                                emptyFields[i-num].points++;
-                                emptyFields[i+num+1].points++;
-                                emptyFields[i-num+1].points++;  
-                            }
-                        else
-                            {
-                                emptyFields[i+1].points++;
-                                emptyFields[i-1].points++;
-                                emptyFields[i-num].points++;
-                                emptyFields[i+num].points++;
-                                emptyFields[i-num+1].points++;
-                                emptyFields[i-num-1].points++;
-                                emptyFields[i+num+1].points++;
-                                emptyFields[i+num-1].points++;
-                                
-                            }
-                        
+                    {           
+                               
+                                column<num-1 ? emptyFields[i+1].points++ : console.log('no space');
+                                column > 0 ? emptyFields[i-1].points++ : console.log('no space');
+                                line > 0 ? emptyFields[i-num].points++ : console.log('no space');
+                                line < num-1 ? emptyFields[i+num].points++ : console.log('no space');
+                                line > 0 && column<num-1 ? emptyFields[i-num+1].points++ : console.log('no space');
+                                line > 0 && column > 0 ? emptyFields[i-num-1].points++ : console.log('no space');
+                                line < num-1 && column<num-1 ? emptyFields[i+num+1].points++ : console.log('no space');
+                                line < num-1 && column > 0 ? emptyFields[i+num-1].points++ : console.log('no space'); 
                     }
-                    console.log(count);
-                    if(count === num-1)
-                        {
-                            count = 0;
-                        }
-                        else{
-                            count++;
-                        }
-                    
+                    console.log('column' ,column);
+                    console.log('wiersz' ,line);
+                    column === num-1 ? line++ : console.log();
+                    column === num-1 ? column = 0 : column++;
                     
             }
             console.log(emptyFields);

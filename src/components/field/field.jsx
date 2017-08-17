@@ -14,7 +14,7 @@ class Field extends Component {
       
     return (
       <div>
-        <img src={this.state.img} onClick={ () => {this.props.isBomb ? this.setState({img: ofaceImg}) : console.log('no bomb') } } />
+        <img src={this.state.img} onClick={ () => {this.props.isBomb ? console.log('bomb', this.props.points) : console.log('no bomb') } } />
       </div>
     );
   }

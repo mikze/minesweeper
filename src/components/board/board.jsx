@@ -7,47 +7,62 @@ class Board extends Component {
         super(props);
 
         this.state={
-            board: []
+            num: 10,
+            difficulty: 1,
+            board: [],
+            emptyFields: [],
+
         }
-        this.fillBoard.bind(this);
-        this.setBombs.bind(this);
-        this.createBoard.bind(this);
+
     }
   
     setBombs(difficulty,num)
     {
-        const emptyFields = new Array(num*num);
+        const emptyFields = [];
+        let count = 0;
         for(let i=0; i<num*num; i++)
             {
-                // console.log('FIELD ',i);
                 let bomb = Math.random() < difficulty ? true : false;
                 emptyFields[i] = {isBomb: bomb};
                 if(bomb)
                     {
                         if(i===0)
                             {
-                                console.log('rog 1: ',i);
+                                emptyFields[i].points=999;
+                             }
+                        else if(i===num-1)
+                            {
                                 emptyFields[i].points=999;
                             }
-                        if(i===num-1)
+                        else if(i===num*num-num )
                             {
-                                console.log('rog 2: ',i);
-                                emptyFields[i].points=999;
-                            }
-                        if(i===num*num-1-num )
-                            {
-                                console.log('rog 3: ',i);
                                 emptyFields[i].points=999;
                             }    
-                        if(i===num*num-1)
+                        else if(i===num*num-1)
                             {
-                                console.log('rog 4: ',i);
                                 emptyFields[i].points=999;
                             }
-                            // if()
-                            //     {
-    
-                            //     }
+                        else if(i>0 && i<num-1)
+                            {
+                                emptyFields[i].points=888;
+                            }
+                        else if(i>num*num-num && i<num*num-1)
+                            {
+                                emptyFields[i].points=777;
+                            }
+                        else if(count === num -1) /////////////
+                            {
+                                emptyFields[i].points=666;
+                            }
+                        else if(count === 0) //////////////
+                            {
+                                emptyFields[i].points=555;
+                            }
+                        else
+                            {
+                                emptyFields[i].points=444;
+                            }
+                            
                             //     if()
                             //         {
     
@@ -58,8 +73,19 @@ class Board extends Component {
                             //     }
                         
                     }
-    
+                    console.log(count);
+                    if(count === num-1)
+                        {
+                            count = 0;
+                        }
+                        else{
+                            count++;
+                        }
+                    
+                    
             }
+            console.log(emptyFields);
+            this.setState({emptyFields: emptyFields});
             return emptyFields;
     }
 
@@ -79,19 +105,14 @@ class Board extends Component {
     }
 
     fillBoard(num,difficulty){
-        const emptyFields = this.setBombs(difficulty,num);
-        
-        setTimeout(this.createBoard(emptyFields,num),10000);
-        
-        return(
-            <div>
-                {this.state.board} {num}x{num} board
-            </div>
-        )
+        const emptyFields = this.setBombs(this.state.difficulty,this.state.num);
+        console.log(this.state.emptyFields);
+        this.createBoard(emptyFields,this.state.num);
+
     }
 
 componentWillMount = () => {
-    this.fillBoard(10,0.5);
+    this.fillBoard();
 }
 
   render() {

@@ -7,8 +7,8 @@ class Board extends Component {
         super(props);
 
         this.state={
-            num: 10,
-            difficulty: 1,
+            num: 8,
+            difficulty: 0.3,
             board: [],
             emptyFields: [],
 
@@ -21,56 +21,85 @@ class Board extends Component {
         const emptyFields = [];
         let count = 0;
         for(let i=0; i<num*num; i++)
+        emptyFields[i] = {isBomb: false, points: 0};
+
+        for(let i=0; i<num*num; i++)
             {
                 let bomb = Math.random() < difficulty ? true : false;
-                emptyFields[i] = {isBomb: bomb};
+                emptyFields[i].isBomb=bomb;
                 if(bomb)
                     {
                         if(i===0)
-                            {
-                                emptyFields[i].points=999;
+                            {   
+                                emptyFields[i+1].points++;
+                                emptyFields[i+num+1].points++;
+                                emptyFields[i+num].points++;   
                              }
                         else if(i===num-1)
                             {
-                                emptyFields[i].points=999;
+                                emptyFields[i-1].points++;
+                                emptyFields[i+num].points++;
+                                emptyFields[i+num-1].points++;    
                             }
                         else if(i===num*num-num )
                             {
-                                emptyFields[i].points=999;
+                                emptyFields[i+1].points++;
+                                emptyFields[i-num+1].points++;
+                                emptyFields[i-num].points++;  
+
                             }    
                         else if(i===num*num-1)
                             {
-                                emptyFields[i].points=999;
+                                emptyFields[i-1].points++;
+                                emptyFields[i-num].points++;
+                                emptyFields[i-num-1].points++;
                             }
                         else if(i>0 && i<num-1)
                             {
-                                emptyFields[i].points=888;
+                                emptyFields[i-1].points++;
+                                emptyFields[i+1].points++;
+                                emptyFields[i+num].points++;
+                                emptyFields[i+num-1].points++;
+                                emptyFields[i+num+1].points++;
                             }
                         else if(i>num*num-num && i<num*num-1)
                             {
-                                emptyFields[i].points=777;
+                                emptyFields[i-1].points++;
+                                emptyFields[i+1].points++;
+                                emptyFields[i-num].points++;
+                                emptyFields[i-num-1].points++;
+                                emptyFields[i-num+1].points++;
+                                
                             }
                         else if(count === num -1) /////////////
                             {
-                                emptyFields[i].points=666;
+                                emptyFields[i-1].points++;
+                                emptyFields[i+num].points++;
+                                emptyFields[i-num].points++;
+                                emptyFields[i+num-1].points++;
+                                emptyFields[i-num-1].points++;
+                                
                             }
                         else if(count === 0) //////////////
                             {
-                                emptyFields[i].points=555;
+                                emptyFields[i+1].points++;
+                                emptyFields[i+num].points++;
+                                emptyFields[i-num].points++;
+                                emptyFields[i+num+1].points++;
+                                emptyFields[i-num+1].points++;  
                             }
                         else
                             {
-                                emptyFields[i].points=444;
+                                emptyFields[i+1].points++;
+                                emptyFields[i-1].points++;
+                                emptyFields[i-num].points++;
+                                emptyFields[i+num].points++;
+                                emptyFields[i-num+1].points++;
+                                emptyFields[i-num-1].points++;
+                                emptyFields[i+num+1].points++;
+                                emptyFields[i+num-1].points++;
+                                
                             }
-                            
-                            //     if()
-                            //         {
-    
-                            //         }
-                            //    for(let u=i; u<i+4;u++)
-                            //     {
-                            //         emptyFields[i].points = 0;
-                            //     }
                         
                     }
                     console.log(count);

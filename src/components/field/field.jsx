@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import fieldImg from '../../sprites/field.jpg';
-import ofaceImg from '../../sprites/oface.jpg';
+import flagImg from '../../sprites/flag.jpg';
 
 class Field extends Component {
     constructor(props) {
@@ -14,7 +14,7 @@ class Field extends Component {
       
     return (
       <div>
-        <img src={this.state.img} onClick={ () => {this.props.isBomb ? console.log('bomb', this.props.points) : console.log('no bomb') } } />
+        <img src={this.state.img} onClick={() => this.setState({img:flagImg})}/>
       </div>
     );
   }
